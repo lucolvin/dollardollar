@@ -23,7 +23,6 @@ from datetime import timedelta
 from flask_mail import Mail, Message
 from flask_migrate import Migrate
 import ssl
-import requests
 import json
 from sqlalchemy import inspect, text
 from oidc_auth import setup_oidc_config, register_oidc_routes
@@ -36,6 +35,7 @@ import uuid
 import json
 import base64
 import pytz
+from security import safe_requests
 
 os.environ['OPENSSL_LEGACY_PROVIDER'] = '1'
 
@@ -1811,7 +1811,7 @@ def update_currency_rates():
         
         # Use ExchangeRate-API (free tier - https://www.exchangerate-api.com/)
         # Or you can use another free API like https://frankfurter.app/
-        response = requests.get(f'https://api.frankfurter.app/latest?from={base_code}')
+        response = safe_requests.get(f'https://api.frankfurter.app/latest?from={base_code}')
         
         if response.status_code != 200:
             app.logger.error(f"API request failed with status code {response.status_code}")

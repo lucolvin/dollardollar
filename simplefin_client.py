@@ -7,6 +7,7 @@ import time
 from datetime import datetime, timedelta
 from flask import session, url_for, redirect, flash
 from urllib.parse import urlencode
+from security import safe_requests
 
 class SimpleFin:
     """
@@ -87,7 +88,7 @@ class SimpleFin:
             
             self.app.logger.info(f"Fetching accounts and transactions from: {url}")
             
-            response = requests.get(url, auth=(parsed['username'], parsed['password']))
+            response = safe_requests.get(url, auth=(parsed['username'], parsed['password']))
             if response.status_code == 200:
                 return response.json()
             else:
@@ -209,7 +210,7 @@ class SimpleFin:
             # Make a simple request to fetch accounts (without transactions)
             url = f"{parsed['base_url']}/accounts"
             
-            response = requests.get(url, auth=(parsed['username'], parsed['password']))
+            response = safe_requests.get(url, auth=(parsed['username'], parsed['password']))
             return response.status_code == 200
             
         except Exception as e:
