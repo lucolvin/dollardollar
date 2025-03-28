@@ -83,7 +83,7 @@ Born from a desire to move beyond restrictive financial tracking platforms, this
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/dollardollar.git
+   git clone https://github.com/lucolvin/dollardollar.git
    cd dollardollar
    ```
 
