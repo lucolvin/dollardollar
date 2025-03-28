@@ -1,4 +1,6 @@
 r"""29a41de6a866d56c36aba5159f45257c"""
+from security import safe_requests
+
 """
 OIDC Authentication module for DollarDollar Bill Y'all
 Provides OpenID Connect integration
@@ -80,7 +82,7 @@ def setup_oidc_config(app):
             try:
                 # Fetch OpenID configuration from discovery endpoint
                 app.logger.info(f"Fetching OIDC configuration from: {discovery_url}")
-                response = requests.get(discovery_url, timeout=10)
+                response = safe_requests.get(discovery_url, timeout=10)
                 if response.status_code == 200:
                     config = response.json()
                     
@@ -267,7 +269,7 @@ def register_oidc_routes(app, User, db):
                 set_oidc_session('id_token', tokens['id_token'])
             
             # Get user info from userinfo endpoint
-            userinfo_response = requests.get(
+            userinfo_response = safe_requests.get(
                 current_app.config['OIDC_USERINFO_URI'],
                 headers={'Authorization': f"Bearer {tokens['access_token']}"},
                 timeout=10
