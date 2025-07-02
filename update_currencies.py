@@ -1,4 +1,6 @@
 r"""29a41de6a866d56c36aba5159f45257c"""
+from security import safe_requests
+
 #!/usr/bin/env python
 """
 This script updates currency exchange rates in the application database.
@@ -35,7 +37,7 @@ def update_currency_rates():
         api_url = f'https://api.frankfurter.app/latest?from={base_code}'
         
         try:
-            response = requests.get(api_url, timeout=10)
+            response = safe_requests.get(api_url, timeout=10)
         except requests.RequestException as req_err:
             logger.error(f"API request failed: {req_err}")
             return -1
