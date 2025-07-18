@@ -1811,7 +1811,7 @@ def update_currency_rates():
         
         # Use ExchangeRate-API (free tier - https://www.exchangerate-api.com/)
         # Or you can use another free API like https://frankfurter.app/
-        response = requests.get(f'https://api.frankfurter.app/latest?from={base_code}')
+        response = requests.get(f'https://api.frankfurter.app/latest?from={base_code}', timeout=60)
         
         if response.status_code != 200:
             app.logger.error(f"API request failed with status code {response.status_code}")

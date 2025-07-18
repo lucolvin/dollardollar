@@ -39,7 +39,7 @@ class SimpleFin:
         self.app.logger.info(f"Claiming access URL from: {claim_url}")
         
         try:
-            response = requests.post(claim_url)
+            response = requests.post(claim_url, timeout=60)
             
             if response.status_code == 200:
                 access_url = response.text.strip()
@@ -87,7 +87,7 @@ class SimpleFin:
             
             self.app.logger.info(f"Fetching accounts and transactions from: {url}")
             
-            response = requests.get(url, auth=(parsed['username'], parsed['password']))
+            response = requests.get(url, auth=(parsed['username'], parsed['password']), timeout=60)
             if response.status_code == 200:
                 return response.json()
             else:
@@ -209,7 +209,7 @@ class SimpleFin:
             # Make a simple request to fetch accounts (without transactions)
             url = f"{parsed['base_url']}/accounts"
             
-            response = requests.get(url, auth=(parsed['username'], parsed['password']))
+            response = requests.get(url, auth=(parsed['username'], parsed['password']), timeout=60)
             return response.status_code == 200
             
         except Exception as e:
